@@ -91,12 +91,14 @@ class TestSerialization(TestCase):
     test_data = (
         (
             # Python 3.4
-            '[{"fields": {"field": "gANdcQAoSwFLAk5lLg=="}, "model": "fields.pickledmodel", "pk": null}]'
+            '[{"fields": {"field": "gANdcQAoSwFLAk5lLg=="}, '
+            '"model": "fields.pickledmodel", "pk": null}]'
         )
         if pickle.HIGHEST_PROTOCOL < 5
         else (
             # Python 3.8
-            '[{"fields": {"field": "gASVCgAAAAAAAABdlChLAUsCTmUu"}, "model": "fields.pickledmodel", "pk": null}]'
+            '[{"fields": {"field": "gASVCgAAAAAAAABdlChLAUsCTmUu"}, '
+            '"model": "fields.pickledmodel", "pk": null}]'
         )
     )
 

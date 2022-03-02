@@ -226,8 +226,14 @@ class TestMigrations(TransactionTestCase):
 
 
 class TestSerialization(TestCase):
-    test_data_integer = '[{"fields": {"field": 42}, "model": "fields.encryptedintegermodel", "pk": null}]'
-    test_data_char = '[{"fields": {"field": "Hello, world!"}, "model": "fields.encryptedcharmodel", "pk": null}]'
+    test_data_integer = (
+        '[{"fields": {"field": 42}, '
+        '"model": "fields.encryptedintegermodel", "pk": null}]'
+    )
+    test_data_char = (
+        '[{"fields": {"field": "Hello, world!"}, '
+        '"model": "fields.encryptedcharmodel", "pk": null}]'
+    )
 
     def test_integer_dumping(self):
         instance = EncryptedIntegerModel(field=42)
