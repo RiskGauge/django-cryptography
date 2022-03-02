@@ -20,6 +20,12 @@ repos:
             exclude: ^docs/
           - id: mixed-line-ending
           - id: trailing-whitespace
+    - repo: https://github.com/asottile/pyupgrade
+      rev: v2.31.0
+      hooks:
+          - id: pyupgrade
+            exclude: ^docs/
+            args: [--py36-plus]
     - repo: https://github.com/pycqa/isort
       rev: 5.10.1
       hooks:
@@ -36,9 +42,3 @@ repos:
             exclude: ^docs/
             additional_dependencies:
                 - flake8-builtins==1.5.3
-    - repo: https://github.com/asottile/pyupgrade
-      rev: v2.31.0
-      hooks:
-          - id: pyupgrade
-            exclude: ^docs/
-            args: [--py36-plus]
