@@ -1,5 +1,6 @@
-import django_cryptography.fields
 from django.db import migrations, models
+
+import django_cryptography.fields
 
 
 class Migration(migrations.Migration):
@@ -13,7 +14,8 @@ class Migration(migrations.Migration):
             model_name='integerencrypteddefaultmodel',
             name='field_2',
             field=django_cryptography.fields.encrypt(
-                models.IntegerField(max_length=50, blank=True)),
+                models.IntegerField(max_length=50, blank=True)
+            ),
             preserve_default=False,
         ),
     ]
