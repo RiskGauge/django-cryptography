@@ -170,10 +170,10 @@ class Fernet(FernetBytes):
             raise ValueError("Fernet key must be 32 url-safe base64-encoded bytes.")
         from ..core.signing import FernetSigner
 
-        super(Fernet, self).__init__(key[16:], FernetSigner(key[:16]))
+        super().__init__(key[16:], FernetSigner(key[:16]))
 
     def _encrypt_from_parts(self, data, iv):
-        payload = super(Fernet, self)._encrypt_from_parts(data, iv)
+        payload = super()._encrypt_from_parts(data, iv)
         return base64.urlsafe_b64encode(payload)
 
     def decrypt(self, token, ttl=None):
@@ -181,4 +181,4 @@ class Fernet(FernetBytes):
             data = base64.urlsafe_b64decode(token)
         except (TypeError, Error):
             raise InvalidToken
-        return super(Fernet, self).decrypt(data, ttl)
+        return super().decrypt(data, ttl)

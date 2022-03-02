@@ -15,7 +15,7 @@ class TestSigner(SimpleTestCase):
         for s in (
             b'hello',
             b'3098247:529:087:',
-            '\u2019'.encode('utf-8'),
+            '\u2019'.encode(),
         ):
             self.assertEqual(
                 signer.signature(s),
@@ -158,7 +158,7 @@ class TestBytesSigner(SimpleTestCase):
         for s in (
             b'hello',
             b'3098247:529:087:',
-            '\u2019'.encode('utf-8'),
+            '\u2019'.encode(),
         ):
             self.assertEqual(
                 signer.signature(s),
@@ -190,7 +190,7 @@ class TestBytesSigner(SimpleTestCase):
             b'3098247529087',
             b'3098247:529:087:',
             b'jkw osanteuh ,rcuh nthu aou oauh ,ud du',
-            b'\u2019',
+            br'\u2019',
         ]
         for example in examples:
             signed = signer.sign(example)

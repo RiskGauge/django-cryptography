@@ -114,7 +114,7 @@ class Signer:
                 'only A-z0-9-_=)' % sep,
             )
         self.salt = force_str(
-            salt or '%s.%s' % (self.__class__.__module__, self.__class__.__name__)
+            salt or f'{self.__class__.__module__}.{self.__class__.__name__}'
         )
 
     def signature(self, value):
@@ -124,7 +124,7 @@ class Signer:
 
     def sign(self, value):
         value = force_str(value)
-        return str('%s%s%s') % (value, self.sep, self.signature(value))
+        return f'{value}{self.sep}{self.signature(value)}'
 
     def unsign(self, signed_value):
         signed_value = force_str(signed_value)
@@ -142,15 +142,15 @@ class TimestampSigner(Signer):
 
     def sign(self, value):
         value = force_str(value)
-        value = str('%s%s%s') % (value, self.sep, self.timestamp())
-        return super(TimestampSigner, self).sign(value)
+        value = f'{value}{self.sep}{self.timestamp()}'
+        return super().sign(value)
 
     def unsign(self, value, max_age=None):
         """
         Retrieve original value and check it wasn't signed more
         than max_age seconds ago.
         """
-        result = super(TimestampSigner, self).unsign(value)
+        result = super().unsign(value)
         value, timestamp = result.rsplit(self.sep, 1)
         timestamp = baseconv.base62.decode(timestamp)
         if max_age is not None:
@@ -159,7 +159,7 @@ class TimestampSigner(Signer):
             # Check timestamp is not older than max_age
             age = time.time() - timestamp
             if age > max_age:
-                raise SignatureExpired('Signature age %s > %s seconds' % (age, max_age))
+                raise SignatureExpired(f'Signature age {age} > {max_age} seconds')
         return value
 
 
@@ -169,7 +169,7 @@ class BytesSigner(Signer):
         self._digest_size = digest.digest_size
         self.key = key or settings.SECRET_KEY
         self.salt = force_str(
-            salt or '%s.%s' % (self.__class__.__module__, self.__class__.__name__)
+            salt or f'{self.__class__.__module__}.{self.__class__.__name__}'
         )
 
     def signature(self, value):
@@ -240,7 +240,7 @@ class FernetSigner(Signer):
             # Check timestamp is not older than ttl
             age = abs(time.time() - timestamp)
             if age > ttl + _MAX_CLOCK_SKEW:
-                raise SignatureExpired('Signature age %s > %s seconds' % (age, ttl))
+                raise SignatureExpired(f'Signature age {age} > {ttl} seconds')
         try:
             self.signature(signed_value[:-d_size]).verify(sig)
         except InvalidSignature:
