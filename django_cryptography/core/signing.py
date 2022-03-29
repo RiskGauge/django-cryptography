@@ -14,7 +14,7 @@ from django.conf import settings
 from django.core.signing import (BadSignature, JSONSerializer,
                                  SignatureExpired, b64_decode, b64_encode,
                                  get_cookie_signer)
-from django.utils import baseconv
+from django.core.signing import b62_encode, b62_decode
 from django.utils.encoding import force_bytes, force_str
 
 from ..utils.crypto import constant_time_compare, salted_hmac
@@ -129,7 +129,7 @@ class Signer:
 
 class TimestampSigner(Signer):
     def timestamp(self):
-        return baseconv.base62.encode(int(time.time()))
+        return b62_encode(int(time.time()))
 
     def sign(self, value):
         value = force_str(value)
@@ -143,7 +143,7 @@ class TimestampSigner(Signer):
         """
         result = super(TimestampSigner, self).unsign(value)
         value, timestamp = result.rsplit(self.sep, 1)
-        timestamp = baseconv.base62.decode(timestamp)
+        timestamp = b62_decode(timestamp)
         if max_age is not None:
             if isinstance(max_age, datetime.timedelta):
                 max_age = max_age.total_seconds()
